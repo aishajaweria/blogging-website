@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>savoury stories AskQuery</title>
+</head>
+<style>
+
+    .container{
+        background-color: #fcb578;
+        color: 1px gray;
+        width: 600px;
+        height: 40vh;
+        padding: 10%;
+        margin-left: 20%;
+    }
+    .a1{
+       margin-top: 5%;
+       margin-left: 40%;
+       margin-bottom: 5%;
+    }
+</style>
+<body style="background-color: beige;">
+    <div class="a1">
+        <input type="text" id="prompt">
+        <button onclick="callGPTAPI()">Ask me anything</button>
+    </div>
+    <div class="container">
+<p id="results"></p>
+        </div>
+    <script>
+const prompt = document.getElementById('prompt');
+const results = document.getElementById('results');
+function callGPTAPI(){
+    const options ={
+        method:"POST",
+        headers:{
+            'content-type':'application/json',
+            'X-RapidAPI-Key':'fee195ef3emshb22b26c7acb78b8p17591cjsnc089e704c039',
+            'X-RapidAPI-Host':'chatgpt53.p.rapidapi.com'
+        },
+        body:`{"model":"gpt-3.5-turbo","messages":[{"role":"user","content":"${prompt.value}"}]}`
+    };
+    fetch(
+        'https://chatgpt53.p.rapidapi.com/', options
+    )
+    .then((response)=> response.json())
+    .then((response)=>{
+        results.innerHTML= response.choices[0].message.content;
+    })
+    .catch((err)=> console.error(err));
+}
+
+    </script>
+</body>
+</html>
